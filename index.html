@@ -1,0 +1,290 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <title>Generate_code!</title>
+</head>
+
+<body>
+    <div class="main_section p-3">
+        <h1 class="text-center">Generate_code!</h1>
+        <div class="container p-5">
+            <div class="row">
+                <div class="col-sm-5 p-5"
+                    style="border-radius: 10px; box-shadow: rgba(50, 50, 93, 0.25) 0px 30px 60px -12px inset, rgba(0, 0, 0, 0.3) 0px 18px 36px -18px inset;">
+                    <div class="row">
+                        <div class="col-sm-5 col-5 col-md-5">
+                            <label for="txtTableName" class="col-form-label">Table Name</label>
+                        </div>
+                        <div class="col-sm-7 col-7 col-md-7">
+                            <input type="text" id="txtTableName" placeholder="Enter Table Name" class="form-control"
+                                aria-describedby="passwordHelpInline">
+                        </div>
+                    </div>
+                    <div class="row my-3">
+                        <div class="col-sm-5 col-5 col-md-5">
+                            <label for="txtKey" class="col-form-label">Key</label>
+                        </div>
+                        <div class="col-sm-7 col-7 col-md-7">
+                            <input type="text" id="txtKey" placeholder="Enter Key..." class="form-control"
+                                aria-describedby="passwordHelpInline">
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-5 col-5 col-md-5">
+                            <label for="txtControl" class="col-form-label">Control</label>
+                        </div>
+                        <div class="col-sm-7 col-7 col-md-7">
+                            <input type="text" id="txtControl" autofocus placeholder="Enter Control"
+                                class="form-control" aria-describedby="passwordHelpInline">
+                        </div>
+                    </div>
+                    <div class="row my-3">
+                        <div class="col-sm-12 col-12 col-md-12 text-center justify-content-center">
+                            <button type="button" id="btnAdd" class="btn btn-success w-100">Add</button>
+                        </div>
+                        <div class="col-sm-12 col-12 col-md-12 text-center justify-content-center">
+                            <button type="button" id="btnUpdate" class="btn btn-success w-100 mt-2"
+                                style="display: none;">Update</button>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-5 p-5 mx-5"
+                    style="border-radius: 10px; box-shadow: rgba(50, 50, 93, 0.25) 0px 30px 60px -12px inset, rgba(0, 0, 0, 0.3) 0px 18px 36px -18px inset;">
+                    <!-- table -->
+                    <div class="mytable">
+                        <table id="myTable" class="table table-striped border-success" data-search="true"
+                            data-flat="true" data-show-header="true" data-pagination="true"
+                            data-page-list="[5, 10, 25, 50, 100, ALL]" data-page-size="10">
+                            <thead>
+                                <tr>
+                                    <th data-field="Table_Name" data-sortable="true">
+                                        <span class="text-success">Table Name</span>
+                                    </th>
+                                    <th data-field="Key" data-sortable="true">
+                                        <span class="text-success">Key</span>
+                                    </th>
+                                    <th data-field="Control" data-sortable="true">
+                                        <span class="text-success">Control</span>
+                                    </th>
+                                    <th>Edit</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <!-- Table body content will be dynamically added -->
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="row my-3">
+                        <div class="col-sm-5 col-5 col-md-5">
+                            <button type="button" id="btnGenerate" class="btn btn-success">Generate</button>
+                        </div>
+                        <div class="col-sm-7 col-7 col-md-7">
+                            <button type="button" id="btnClose" class="btn btn-danger">Close</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="container mb-5">
+            <hr style="box-shadow: 0px 9px 30px rgba(255, 149, 5, 0.3); height: 3px;">
+            <div class="row">
+                <div class="col-sm-6 border-end border-info">
+                    <textarea class="form-control " id="txtJQcode" style="height: 550px; width: 100%; "
+                        placeholder="jquery Code"></textarea>
+                </div>
+                <div class="col-sm-6 border-end border-info">
+                    <textarea id="txt_PHP_Code" style="height: 550px; width: 100%; " class="form-control"
+                        placeholder="PHP Code"></textarea>
+                </div>
+            </div>
+        </div>
+        <marquee behavior="" direction=""> <h4 style="color: brown;">*******************************************************................*******************************************************</h4></marquee>
+       
+    </div>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
+        crossorigin="anonymous"></script>
+    <script>
+        $(document).ready(function () {
+            $("#btnAdd").click(function () {
+                var tableName = $("#txtTableName").val();
+                var key = $("#txtKey").val();
+                var control = $("#txtControl").val();
+
+                var row = "<tr><td>" + tableName + "</td><td>" + key + "</td><td>" + control + "</td><td><button class='btn btn-primary btn-sm btn-edit'>Edit</button></td></tr>";
+                $("#myTable tbody").append(row);
+
+                $("#txtTableName").val("");
+                $("#txtKey").val("");
+                $("#txtControl").val("");
+            });
+
+            $(document).on("click", ".btn-edit", function () {
+                var currentRow = $(this).closest("tr");
+                var tableName = currentRow.find("td:eq(0)").text();
+                var key = currentRow.find("td:eq(1)").text();
+                var control = currentRow.find("td:eq(2)").text();
+
+                $("#txtTableName").val(tableName);
+                $("#txtKey").val(key);
+                $("#txtControl").val(control);
+
+                // Show Update button, hide Add button
+                $("#btnUpdate").show();
+                $("#btnAdd").hide();
+
+                // Change update functionality
+                $("#btnUpdate").off().on("click", function () {
+                    currentRow.find("td:eq(0)").text($("#txtTableName").val());
+                    currentRow.find("td:eq(1)").text($("#txtKey").val());
+                    currentRow.find("td:eq(2)").text($("#txtControl").val());
+
+                    // Clear input fields
+                    $("#txtTableName").val("");
+                    $("#txtKey").val("");
+                    $("#txtControl").val("");
+
+                    // Show Add button, hide Update button
+                    $("#btnAdd").show();
+                    $("#btnUpdate").hide();
+                });
+            });
+
+            $("#btnGenerate").click(function () {
+                var table = document.getElementById("myTable");
+                var jqCode = "";
+                // mycode for Save btn
+                jqCode = jqCode + "// Code for Save Btn" + "\n";
+                jqCode = jqCode + "$.post(\"code.php\",{" + "\n";
+                jqCode = jqCode + " 'cmd':'Insert'," + "\n";
+                jqCode = jqCode + "" + "\n";
+                for (var i = 1, row; row = table.rows[i]; i++) {
+                    var key = row.cells[1].innerText;
+                    var control = row.cells[2].innerText;
+                    jqCode = jqCode + " '" + key + "':$(\"#" + control + "\").val()," + "\n";
+                }
+                jqCode = jqCode + " },function(result){" + "\n";
+                jqCode = jqCode + " result=JSON.parse(result);" + "\n";
+                jqCode = jqCode + "alert(result.message);" + "\n";
+                jqCode = jqCode + "});" + "\n \n";
+                // mycode for delete btn
+                jqCode = jqCode + "//.....Code For Delete Btn........" + "\n";
+                jqCode = jqCode + "$(document).on('click','#btnDelete',function(){" + "\n";
+                jqCode = jqCode + "var id =$(this).val();" + "\n";
+                jqCode = jqCode + "$.post(\"code.php\",{" + "\n";
+                jqCode = jqCode + "'cmd':'Delete'," + "\n";
+                jqCode = jqCode + "'id':id" + "\n";
+                jqCode = jqCode + "},function(result){" + "\n";
+                jqCode = jqCode + "result=JSON.parse(result);" + "\n";
+                jqCode = jqCode + "alert(result.message);" + "\n";
+                jqCode = jqCode + "location.reload(true);" + "\n";
+                jqCode = jqCode + "});" + "\n";
+                jqCode = jqCode + "});" + "\n \n";
+
+                // mycode for Update btn
+                jqCode = jqCode + "$(document).on('click', '#btnUpdate', function () {" + "\n";
+                jqCode = jqCode + "var id = $(this).val();" + "\n";
+                jqCode = jqCode + "alert(id);" + "\n";
+                jqCode = jqCode + " window.location.href = update__html?id= + id;" + "\n";
+                jqCode = jqCode + " });" + "\n";
+                jqCode = jqCode + "" + "\n";
+
+                // mycode for BootstrapTable btn
+                jqCode = jqCode + "$.post(\"code.php\", {" + "\n";
+                jqCode = jqCode + "'cmd': 'GetAllRecord'" + "\n";
+                jqCode = jqCode + "}, function (result) {" + "\n";
+                jqCode = jqCode + "result = JSON.parse(result);" + "\n";
+                jqCode = jqCode + "$('#myTable').bootstrapTable({" + "\n";
+                jqCode = jqCode + "data: result" + "\n";
+                jqCode = jqCode + "});" + "\n";
+                jqCode = jqCode + "});" + "\n";
+                jqCode = jqCode + " " + "\n";
+
+                $("#txtJQcode").val(jqCode);
+
+                // ...................PHP Code.php page.......................
+                var phpCode = "";
+                phpCode = phpCode + "......................................." + "\n";
+
+                phpCode = phpCode + "include_once('dbconnection.php'); " + "\n";
+                phpCode = phpCode + "if (isset($_POST[\"cmd\"])) { " + "\n";
+                phpCode = phpCode + "$cmd = $_POST[\"cmd\"]; " + "\n";
+                phpCode = phpCode + "if ($cmd == \"Insert\") { " + "\n";
+                // .......................
+                // var tableName = row.cells[0].innerText;
+                for (var i = 1, row; row = table.rows[i]; i++) {
+                    var tableName = row.cells[0].innerText;
+                    var key = row.cells[1].innerText;
+                    var control = row.cells[2].innerText;
+                    phpCode = phpCode + "$" + key + "=$_POST['" + key + "'];\n";
+                }
+                phpCode = phpCode + "$sql_query = \"insert into +" + tableName + "+ value(null,'$key','$key','$key'.....)\"; " + "\n";
+                phpCode = phpCode + "$query_run= mysqli_query($connection, $sql_query); " + "\n";
+                phpCode = phpCode + "if ($query_run) { " + "\n";
+                phpCode = phpCode + "$response = array( " + "\n";
+                phpCode = phpCode + "\"message" + "=>" + "record save\" " + "\n";
+                phpCode = phpCode + "); " + "\n";
+                phpCode = phpCode + "$response = json_encode($response); " + "\n";
+                phpCode = phpCode + "echo $response; " + "\n";
+                phpCode = phpCode + "  } else { " + "\n";
+                phpCode = phpCode + " $response = array( " + "\n";
+                phpCode = phpCode + "\"message" + "=>" + "record not save\" " + "\n";
+                phpCode = phpCode + "  ); " + "\n";
+                phpCode = phpCode + "  $response = json_encode($response); " + "\n";
+                phpCode = phpCode + " echo $response; " + "\n";
+                phpCode = phpCode + " } " + "\n";
+                phpCode = phpCode + " } " + "\n";
+                phpCode = phpCode + "} else { " + "\n";
+                phpCode = phpCode + "  $response = array(" + "\n";
+                phpCode = phpCode + "\"message" + "=>" + "'cmd' parameter not provided\" " + "\n";
+                phpCode = phpCode + " ); " + "\n";
+                phpCode = phpCode + "  $response = json_encode($response); " + "\n";
+                phpCode = phpCode + "  echo $response; " + "\n";
+                phpCode = phpCode + "} " + "\n";
+                phpCode = phpCode + "...................................................... " + "\n";
+
+
+
+
+                phpCode = phpCode + "get All record to bootstrap table " + "\n";
+
+
+                phpCode = phpCode + "if (isset($_POST[\"cmd\"])) { " + "\n";
+    
+                phpCode = phpCode + "$cmd = $_POST[\"cmd\"]; " + "\n";
+                phpCode = phpCode + "if ($cmd == \"GetAllRecord\") { " + "\n";
+                phpCode = phpCode + "$sql_query = \"select * from registertable\"; " + "\n";
+                phpCode = phpCode + "$query_run = mysqli_query($connection, $sql_query); " + "\n";
+                phpCode = phpCode + " $data = array();" + "\n";
+                phpCode = phpCode + "while ($row = mysqli_fetch_array($query_run)) { " + "\n";
+                phpCode = phpCode + "$record = array( " + "\n";
+
+                for (var i = 1, row; row = table.rows[i]; i++) {
+                    var tableName = row.cells[0].innerText;
+                    var key = row.cells[1].innerText;
+                    var control = row.cells[2].innerText;
+                    var arrData=0;
+                    arrData++;
+                    phpCode = phpCode +"'"+key+"'" + "=>$row['" + arrData+ "'];\n";
+                }
+                phpCode = phpCode + " " + "\n";
+                phpCode = phpCode + " " + "\n";
+
+
+
+                $("#txt_PHP_Code").val(phpCode);
+                // jqCode = jqCode + " '" + key + "':$(\"#" + control + "\").val()," + "\n";
+
+            });
+        });
+    </script>
+</body>
+
+</html>
